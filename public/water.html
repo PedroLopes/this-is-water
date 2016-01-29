@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="admin page">
+
+<title id="movement_number_top">This is water</title>
+<link rel="stylesheet" href="pure-min.css">
+<link rel="stylesheet" href="grids-responsive-min.css">
+<link rel="stylesheet" href="movement.css">
+<link rel="stylesheet" href="csshake.min.css">
+<!--<link href='http://fonts.googleapis.com/css?family=Varela' rel='stylesheet' type='text/css'>-->
+<script src="hyperlink.js"></script>
+<script src='/faye/client.js'></script>
+<script>
+    var emergency = 0;
+
+    var client = new Faye.Client('/faye',{
+        timeout: 20
+    });
+
+    function changeDisplay(id, propertyValue) {
+                //document.getElementById(id).style.display = 'block';
+                document.getElementById(id).style.display = propertyValue;
+    }
+
+    client.subscribe('/talkback', function(message) {
+	    emergency = message.text;
+/*	    if (emergency == "disable") {
+		replaceElementText("subtext","emergency switch is active, so let's wait this out"); 
+		replaceElementText("rui","playing [wait!]"); 
+		//setTimeout(function() { alert("em on"); replaceElementText("subtext","Use the emergency button");replaceElementText("rui","EMERGENCY!");}, 245*1000);
+		} else if (emergency == "enable") {
+		replaceElementText("rui","EMERGENCY!");
+		replaceElementText("subtext","Use the emergency button");
+	}*/
+});
+
+    function setCharAt(str,index,chr) {
+        if(index > str.length-1) return str;
+        return str.substr(0,index) + chr + str.substr(index+1);
+    }
+
+    function activateGlitches(){
+        var zombies = document.getElementsByName("zombie");
+        for (i = 0; i < zombies.length; i++) {
+            zombies[i].setAttribute('data-text',zombies[i].innerHTML); //awakes zombies
+        }
+    }
+
+</script>
+</head>
+<body bgcolor="#FFFFFF"> 
+
+ <div class="banner">
+    <h1 class="banner-head" > 
+        <!--<br><br><br><br><br>-->
+	
+        <div name="" align=" center"  id="subtext">What is water?</div>
+        <!--<div name="zombie" id="movement_number" class="glitch" data-text="">loading...</div>--> 
+    </h1>
+</div>
+
+	<div align="center" id="reveal-water">This is water, from a small creek that leads all the way up to a large waterfall. Recorded at the sächsische schweiz on January 2, 2016.</br></br> 
+ </div>
+	<div align="center"  id="reveal-wallace">This is water, a commencement speech given by David Foster Wallace at Kenyon College on May 21, 2005.</br></br></br></div> 
+ </div>
+            <div align="center">
+                <button class="button-choose pure-button" id="rui" onclick="execute(this.id,Math.floor((Math.random() * 14) + 1))">Show me water...</button>
+            </div>
+            <div align="center">
+                <button class="button-choose pure-button" id="appear-later" onclick="execute(this.id,0)">humm...show me the REAL water!</button>
+            </div>
+
+
+</body>
+</html>
